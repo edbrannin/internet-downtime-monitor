@@ -13,7 +13,7 @@ try:
     URL = CONF['url']
     API_KEY = CONF['api_key']
 except:
-    pass
+    print "Warning: unable to load API key."
 
 class HealthChecker(object):
     def __init__(self, url):
