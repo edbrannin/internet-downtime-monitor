@@ -26,7 +26,6 @@ class HealthChecker(object):
             time.sleep(delay)
 
     def check(self):
-        print "Checking"
         try:
             response = urllib2.urlopen(self.url, timeout=1)
             self.record_ok()
