@@ -53,7 +53,7 @@ class HealthChecker(object):
     def note_time(self, filename, now=None):
         if now is None:
             now = datetime.now()
-        with open(filename, 'w+') as out:
+        with open(filename, 'a') as out:
             out.write(str(now))
             out.write("\n")
 
