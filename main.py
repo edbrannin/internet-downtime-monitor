@@ -3,6 +3,7 @@
 from datetime import datetime
 
 import time
+import urllib2
 
 import requests
 
@@ -26,16 +27,15 @@ class HealthChecker(object):
 
     def check(self):
         print "Checking"
-        r = requests.get(self.url, timeout=20)
-        print "Response code {}, OK={}".format(r.status_code, r.ok)
-        if not r.ok:
-            self.record_down()
-        else:
+        try:
+            response = urllib2.urlopen('http://74.125.228.100', timeout=1)
             self.record_ok()
+        except urllib2.URLError:
+            self.record_down()
 
     def record_down(self):
         now = datetime.now()
-        if self.down_since is not None:
+        if self.down_since is None:
             self.down_since = now
         print("Down for {} since {}".format(
             now - self.down_since, self.down_since))
