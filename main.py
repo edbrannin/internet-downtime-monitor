@@ -28,7 +28,7 @@ class HealthChecker(object):
     def check(self):
         print "Checking"
         try:
-            response = urllib2.urlopen('http://74.125.228.100', timeout=1)
+            response = urllib2.urlopen(self.url, timeout=1)
             self.record_ok()
         except urllib2.URLError:
             self.record_down()
