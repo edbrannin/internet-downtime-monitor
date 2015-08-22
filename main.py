@@ -3,6 +3,7 @@
 from datetime import datetime
 
 import time
+import json
 import urllib2
 
 import requests
@@ -13,7 +14,9 @@ try:
     URL = CONF['url']
     API_KEY = CONF['api_key']
 except:
+    import traceback
     print "Warning: unable to load API key."
+    traceback.print_exc()
 
 class HealthChecker(object):
     def __init__(self, url):
