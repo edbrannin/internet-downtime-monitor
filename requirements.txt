@@ -1,5 +1,7 @@
 
 sqlalchemy
 requests
-supervisord
+supervisor
 
+# Optional
+pyfiglet

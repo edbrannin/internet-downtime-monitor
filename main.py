@@ -41,22 +41,34 @@ class HealthChecker(object):
             self.down_since = now
         print("Down for {} since {}".format(
             now - self.down_since, self.down_since))
-        self.note_time('FAIL.txt', self.down_since)
+        self.note_time('FAIL.txt', now, self.down_since)
 
     def record_ok(self):
         now = datetime.now()
         self.note_time("OK.txt")
         if self.down_since is not None:
-            push("Internet back!", self.url,
-                    "Down since {}; duration {}".format(
-                        self.down_since, now - self.down_since))
+            heading = "Internet back!"
+            message = "Down since {}; duration {}".format(
+                    self.down_since, now - self.down_since)
+            try:
+                push(heading, self.url, message)
+            except:
+                pass
+            try:
+                import pyfiglet
+                message = pyfiglet.Figlet().renderText(message)
+            except ImportError:
+                pass
+            print("{}\n{}".format(heading, message)
         self.down_since = None
 
-    def note_time(self, filename, now=None):
+    def note_time(self, filename, now=None, also=None):
         if now is None:
             now = datetime.now()
         with open(filename, 'a') as out:
             out.write(str(now))
+            if also is not None:
+                out.write("\t" + str(also))
             out.write("\n")
 
 def push(title, url, message):
